@@ -1,0 +1,37 @@
+{# templates/base.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Accueil{% endblock %}</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/css/axentix.min.css">
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <div id="sidebar">
+            {% block sidebar %}
+                <ul class=""container">
+                    <li><a class="accueil" href="/quizz"></a></li>
+                    <li><a href="/categorie">Categorie</a></li>
+                    <li><a class="questions" href="questions">Questions</a></li>
+
+                </ul>
+            {% endblock %}
+        </div>
+        <div id="pub"></div>
+        <div id="content">
+            <p class="categorietitle">Categories :</p>
+                <ul class="categories">
+                    {% for product in production %}
+                    
+                        <li><a class = "categorie" href="/question/1/{{product.id}}">{{product.name}}</a></li> <hr>
+                    {% endfor %}
+                </ul>
+                {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

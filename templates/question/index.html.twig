@@ -1,0 +1,75 @@
+{# templates/base.html.twig #}
+{# templates/base.html.twig #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+      <title>{% block title %}Accueil{% endblock %}</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/css/axentix.min.css">
+      {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+      {% endblock %}
+  </head>
+  <body>
+    <div id="sidebar">
+      {% block sidebar %}
+        <ul class=""container">
+          <li><a class="accueil" href="/quizz"></a></li>
+          <li><a href="/categorie">Categorie</a></li>
+          <li><a class="questions" href="questions">Questions</a></li>
+        </ul>
+      {% endblock %}
+    <div class="alls">
+      <div id="pub"></div>
+      <div id="content">
+        <p class="categorietitle">Categories :</p>
+          <ul class="categories">
+          {% for product in production %}
+            <li><a class = "categorie" href="/question/1/{{product.id}}">{{product.name}}</a></li> <hr>
+          {% endfor %}
+          </ul>
+      </div>
+      <div class="contentss">
+        <div id="contentss">
+        <ul>
+          {% for reponse in product |slice(0, 1) %}
+            <li> =>{{reponse.question}}
+              <input type="hidden" value="{{reponse.id}}"
+            </li>
+          {% endfor %}
+
+          {% for reponse in product |slice(0,3) %}
+          
+          {% if reponse.idQuestion < prod|length  %}
+            <div>
+              <form method="link" action="/question/{{reponse.idQuestion + 1}}/{{reponse.idCategorie}}"> 
+                <input type="radio" id="reponse" name="reponse" value={{reponse.reponses}} checked>
+                <label for="huey">{{reponse.reponse}}</label>
+                <input type= hidden value = {{reponse.questions}}>
+            </div>
+          {% else %}
+          <div>
+            <form method="link" action="/reponse/{{reponse.idQuestion + 1}}/{{reponse.idCategorie}}"> 
+              <input type="radio" id="reponse" name="reponse" value={{reponse.reponses}} checked>
+              <label for="reponse">{{reponse.reponse}}</label>
+              <input type= hidden value = {{reponse.questions}}>
+            </div>
+          {%endif%}
+          {% endfor %}
+          
+          {% for reponse in product |slice(0,1) %}
+            {% if reponse.idQuestion < prod|length  %}
+              <input type= "submit" value ="suivant">
+              <button> <a href="/question/{{reponse.idQuestion - 1}}/{{reponse.idCategorie}}"> precedent </a> </button>
+            {% elseif prod|last %}
+
+        <button> <a href="/reponse/{{reponse.idQuestion + 1}}/{{reponse.idCategorie}}"> Valider </a> </button>
+            {%endif%}
+          {%endfor%}
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
